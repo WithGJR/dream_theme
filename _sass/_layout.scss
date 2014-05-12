@@ -45,7 +45,7 @@ h6 {
 
 p {
   font-size: 1.8em ;
-	line-height: 1.7em; 
+	line-height: 2em;
 }
 
 img {
@@ -62,9 +62,10 @@ i, em {
 
 ol, ul {
   list-style-position: inside;
+  margin: percentage(10px/$context) 0 percentage(10px/$context) percentage(10px/$context);
 
-  ul {
-    list-style-type: circle;
+  li {
+    line-height: 2em;
   }
 }
 
@@ -303,6 +304,10 @@ table.highlight {
 
 	.title {
 	  padding: percentage(10px/$context) 0 percentage(10px/$context) percentage(10px/$context);
+
+    a {
+      color: #000000;
+    }
 	}
 
 	.article {
