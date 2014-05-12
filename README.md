@@ -3,6 +3,8 @@ Dream - A Logdown Theme
 
 Author: [Kevin](http://blog.cgmlife.net/)
 
+If you want to contribute to this theme, please send pull request to me, Thanks.
+
 ===========
 
 The MIT License (MIT)
