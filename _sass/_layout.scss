@@ -62,7 +62,7 @@ i, em {
 
 ol, ul {
   list-style-position: inside;
-  margin: percentage(10px/$context) 0 percentage(10px/$context) percentage(10px/$context);
+  margin: 10px 0 10px 15px;
 
   li {
     line-height: 2em;
