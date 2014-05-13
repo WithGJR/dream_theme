@@ -311,7 +311,7 @@ table.highlight {
 	}
 
 	.article {
-		font-size: inherit;
+		//font-size: 1.8em;
 	  padding: percentage(10px/$context) percentage(10px/$context);  /* 10px / 920px */ 
 
 		h1, h2, h3, h4, h5, h6 {
@@ -410,13 +410,17 @@ table.highlight {
     font-weight: bold;
   }
 
-	.article {
-		font-size: 180%;
+  .article {
+    font-size: 1.8em;
 
-		p {
-			font-size: 100%;
-		}
-	}
+    p {
+      font-size: 1em;
+    }
+
+    .more {
+      font-size: 1em;
+    }
+  }
 }
 
 
