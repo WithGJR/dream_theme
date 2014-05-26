@@ -97,9 +97,9 @@
 			{% endblock %}
 
 		  {% block posts %}
-        <div class="post-container">
-		      <div class="rel-date" data-timestamp="{{post.published_at.timestamp}}"> {{ post.published_at.date }} </div>
-          <div class="title">
+        <article class="post-container">
+					<header class="title">
+						<div class="rel-date" data-timestamp="{{post.published_at.timestamp}}"> {{ post.published_at.date }} </div>
             <h2>
               <a href="{{post.absolute_url}}">
                 {% block tags_page|index_page|show_page %}
@@ -111,7 +111,7 @@
                 {% endblock %}
               </a>
             </h2>
-					</div>
+					</header>
 
 					<div class="article">
 						{% block search_page %}
@@ -167,7 +167,7 @@
               {% disqus %}
             {% endblock %}
           {% endblock %}
-        </div>
+        </article>
 			{% endblock %}
 
 			{% block pagination %}
