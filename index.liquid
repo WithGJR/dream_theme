@@ -11,17 +11,17 @@
   <script src="http://cdn-theme.logdown.io/dream/javascripts/menu.js"></script>
 </head>
 <body>
-	<div class="top-line"></div>
+  <div class="top-line"></div>
   <div class="wrapper">
-  	<header class="header">
-  	  <div class="logo">
-  	    <h1><a href="/">{{ blog.title }}</a></h1>
-			</div>
+    <header class="header">
+      <div class="logo">
+        <h1><a href="/">{{ blog.title }}</a></h1>
+      </div>
 
       <span id="button"><i class="fa fa-bars"></i> Menu</span>
-			<nav class="nav">
-			<ul class="inline-list">
-				 {% block static_page_list %}
+      <nav class="nav">
+        <ul class="inline-list">
+          {% block static_page_list %}
             {% block static_pages %}
               <li>
                 <a href="{{ static_page.absolute_url }}" title="{{static_page.title}}">
@@ -34,37 +34,39 @@
           <li><a href="{{ blog.archives_url }}">Archive</a></li>
           <li><a href="{{ blog.rss_url }}" target="_blank">feeds</a></li>
         </ul>
-			</nav>
+      </nav>
 
-			<div class="search">
-				<form accept-charset="UTF-8" action="{{ blog.search_posts_url }}" method="get">
-					<div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
-				 <input class="search-box" type="text" name="q" results="0" value="" placeholder="Search">
-				</form>
+      <div class="search">
+        <form accept-charset="UTF-8" action="{{ blog.search_posts_url }}" method="get">
+          <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
+         <input class="search-box" type="text" name="q" results="0" value="" placeholder="Search">
+        </form>
       </div>
-  	</header>
+    </header>
 
-		<div class="content">
-			{% block search_page %}
+    <div class="main-content">
+      {% block search_page %}
         <div class="posts-search">
-          <p class="search-result-meta">
+          <section>
+          <h1 class="search-result-meta">
             Your search for <strong>“ {{ query_string }} ”</strong> matches <strong> {{ results_count }} </strong> results:
-          </p>
+          </h1>
       {% endblock %}
 
       {% block tags_page %}
         <div class="posts-search">
-          <p class="search-result-meta">
-            Posts match <strong>“ {{ tag_name }} ”</strong> tag:
-          </p>
+          <section>
+          <h1 class="search-result-meta">
+            Tag: <strong>“ {{ tag_name }} ”</strong>
+          </h1>
       {% endblock %}
 
       {% block archives_page %}
         <div class="post-container">
-          <div class="title">
-            <h2>Blog Archive</h2>
-          </div>
-          <div class="article">
+
+          <h2>Blog Archive</h2>
+
+          <div class="post-content">
             {% block archives %}
               <h3>{{archive.year}}</h3>
 
@@ -83,94 +85,114 @@
             {% endblock %}
           </div>
         </div>
-			{% endblock %}
+      {% endblock %}
 
-			{% block static_page %}
-				<div class="post-container">
-					<div class="title">
-						<h2>{{static_page.title}}</h2>
-					</div>
-					<div class="article">
-						{{static_page.content}}
-					</div>
-				</div>
-			{% endblock %}
+      {% block static_page %}
+        <div class="post-container">
+          <article>
+          	<header class="post-title">
+           	 <h1>{{static_page.title}}</h1>
+        	  </header>
+         	  <div class="post-content">
+          	  {{static_page.content}}
+         	  </div>
+          </article>
+        </div>
+      {% endblock %}
+          
+     {% block index_page %}
+      <section>
+        <h3 class="new-posts">最新文章</h3>
+     {% endblock %}  
+     {% block posts %}
+        <div class="post-container">
+         	<article>
+         	 <header class="post-title">
+          	  <div class="rel-date"> 
+             	  {{ post.published_at.date }}
+           	  </div>
+          	  <h1>
+          	    <a href="{{post.absolute_url}}">
+          	      {% block tags_page|index_page|show_page %}
+          	        {{post.title}}
+          	      {% endblock %}
 
-		  {% block posts %}
-        <article class="post-container">
-					<header class="title">
-						<div class="rel-date" data-timestamp="{{post.published_at.timestamp}}"> {{ post.published_at.date }} </div>
-            <h2>
-              <a href="{{post.absolute_url}}">
-                {% block tags_page|index_page|show_page %}
-                  {{post.title}}
-                {% endblock %}
+           	     {% block search_page %}
+                    {{ post.title | highlight: query_string }}
+             	   {% endblock %}
+             	 </a>
+            	</h1>
+         	 </header>
 
-                {% block search_page %}
-                  {{ post.title | highlight: query_string }}
-                {% endblock %}
-              </a>
-            </h2>
-					</header>
+          	<div class="post-content">
+           	 {% block search_page %}
+           	   {{ post.content | search_content: query_string }}
+             {% endblock %}
 
-					<div class="article">
-						{% block search_page %}
-              {{ post.content | search_content: query_string }}
-            {% endblock %}
+           	 {% block index_page|tags_page %}
+            	  {{ post.excerpt_content }}
 
-            {% block index_page|tags_page %}
-              {{ post.excerpt_content }}
+            	  {% block readmore %}
+              	  <a href="{{post.absolute_url}}" class="more">Read on →</a>
+              	{% endblock %}
+           	 {% endblock %}
 
-              {% block readmore %}
-                <a href="{{post.absolute_url}}" class="more">Read on →</a>
-              {% endblock %}
-						{% endblock %}
+             {% block show_page %}
+          	    {{ post.content }}
 
-            {% block show_page %}
-							{{ post.content }}
+             		<div class="social-share group">
+              	  <div class="pull-right">
+                	  {% block facebook_sharing %}
+               	 	   <div class="fb-like" data-href="{{post.absolute_url}}" data-layout="button_count" data-send="false" data-show-faces="false" data-width="90"></div>
+                  	{% endblock %}
+              	  </div>
 
-							{% block tag_list %}
-								<div class="tags">Tags:
-									{% block tags %}
-										<a href="{{tag.url}}">{{tag.name}}</a>,
-									{% endblock %}
-								</div>
-							{% endblock %}
+               	  <a href="#" style="dispaly:none; border-bottom:none;">&nbsp;</a>
 
-							<div class="social-share group">
-                <div class="pull-right">
-                  {% block facebook_sharing %}
-                  <div class="fb-like" data-href="{{post.absolute_url}}" data-layout="button_count" data-send="false" data-show-faces="false" data-width="90"></div>
+
+               	  {% block twitter_sharing %}
+                	  <a href="https://twitter.com/share?" class="twitter-share-button">Tweet</a>
+           	      {% endblock %}
+
+             	    {% block google_plus_sharing %}
+                     <div class="g-plusone" data-size="medium"></div>
                   {% endblock %}
-                </div>
 
-                <a href="#" style="dispaly:none; border-bottom:none;">&nbsp;</a>
+              	</div>
 
-
-                {% block twitter_sharing %}
-                  <a href="https://twitter.com/share?" class="twitter-share-button">Tweet</a>
+                {% block tag_list %}
+                 <footer>
+                   <div class="tags">Tags:
+                     {% block tags %}
+                       <a href="{{tag.url}}">{{tag.name}}</a>,
+                     {% endblock %}
+                   </div>
+                 </footer>
                 {% endblock %}
-
-                {% block google_plus_sharing %}
-                   <div class="g-plusone" data-size="medium"></div>
-                {% endblock %}
-
-              </div>
             {% endblock %}
+            
+            </div>
 
-          </div>
-
-
+          </article>
           <div style="clear: both;">&nbsp;</div>
           {% block show_page %}
             {% block disqus %}
               {% disqus %}
             {% endblock %}
           {% endblock %}
-        </article>
-			{% endblock %}
-
-			{% block pagination %}
+        </div>
+      {% endblock %}
+		  {% block index_page %}
+        </section>
+      {% endblock %}
+      {% block tags_page %}
+        </section>
+      {% endblock %}
+      {% block search_page %}
+        </section>
+      {% endblock %}
+            
+      {% block pagination %}
       <div class="pagination pagination-centered">
         <ul>
           {% block previous_page %}
@@ -209,13 +231,13 @@
         </ul>
       </div>
       {% endblock %}
-  	</div>
+    </div>
 
-	<footer class="footer">
+  <footer class="footer">
       <p>
         <span>Copyright © 2014 {{ blog.user_name }} . </span>  Powered by <a href="http://logdown.com/">Logdown</a>.<br /> This theme is designed by <a href="http://blog.cgmlife.net/">Kevin</a>
       </p>
-	</footer>
-  </div>
+  </footer>
+	</div>
 </body>
 </html>
