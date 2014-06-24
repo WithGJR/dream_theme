@@ -1,4 +1,4 @@
-@media screen and (max-width: 580px) {
+@media screen and (max-width: 767px) {
 	#button {
 		display: block;
 		width: 100%;
@@ -40,6 +40,10 @@
 		}
 	}
 
+	.wrapper {
+		width: 100%;
+	}
+
 	.post-container {
 		.rel-date {
 			width: 100%;
@@ -69,10 +73,6 @@
 }
 
 @media screen and (max-width: 400px) {
-	.wrapper {
-		width: 90%;
-	}
-	
 	.post-container {
 		width: 95%;
 		padding: percentage(15px/$context) percentage(15px/$context);
